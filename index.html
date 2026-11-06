@@ -858,7 +858,7 @@
         <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a> — it takes 2 minutes.
         Your key stays in your browser only.
         <div class="api-key-row">
-          <input type="password" id="apiKeyInput" placeholder="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" autocomplete="off" spellcheck="false">
+          <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
           <button class="btn-save-key" onclick="saveApiKey()">Save Key</button>
         </div>
       </div>
@@ -1022,11 +1022,11 @@ Follow-up #2 (Day 7): Quick question — are you still looking to [achieve outco
 
   <!-- ── FOOTER ── -->
   <footer>
-    <div class="footer-left">PitchKit © 2025 — Powered by Claude AI</div>
+    <div class="footer-left">PitchKit © 2026 · Built by <a href="https://github.com/emresenturer" target="_blank" rel="noopener">Emre Senturer</a> · Powered by Claude</div>
     <div class="footer-links">
-      <a href="#">Templates ($27)</a>
-      <a href="#">Upgrade Pro</a>
-      <a href="#">Privacy</a>
+      <a href="https://senturer.gumroad.com/l/pitchkit" target="_blank" rel="noopener">Templates ($27)</a>
+      <a href="https://senturer.gumroad.com/l/pitchkit" target="_blank" rel="noopener">Upgrade Pro</a>
+      <a href="https://github.com/emresenturer/pitchkit#privacy" target="_blank" rel="noopener">Privacy</a>
     </div>
   </footer>
 
@@ -1153,11 +1153,14 @@ Format it ready to copy and send. Include a compelling subject line if it's an e
           'Content-Type': 'application/json',
           'x-api-key': apiKey,
           'anthropic-version': '2023-06-01',
+          'anthropic-beta': 'server-side-fallback-2026-07-01',
           'anthropic-dangerous-direct-browser-access': 'true'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 600,
+          model: 'claude-opus-5-5',
+          max_tokens: 4000,
+          output_config: { effort: 'low' },
+          fallbacks: 'default',
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }]
         })
@@ -1169,7 +1172,10 @@ Format it ready to copy and send. Include a compelling subject line if it's an e
       }
 
       const data = await response.json();
-      const text = data.content.map(b => b.text || '').join('');
+      if (data.stop_reason === 'refusal') {
+        throw new Error('The model declined this request. Try rephrasing your offer.');
+      }
+      const text = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
 
       // Increment usage
       usedCount++;
