@@ -509,6 +509,12 @@
     display: none;
   }
   .followup-section.visible { display: block; }
+  .followup-text { white-space: pre-wrap; font-size: 14px; line-height: 1.7; color: var(--muted2); background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 12px 0; }
+  .followup-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .templates-card { display: block; margin-top: 18px; padding: 16px 18px; border: 1px solid var(--accent-border); background: var(--accent-dim); border-radius: 12px; text-decoration: none; }
+  .templates-card:hover { border-color: var(--accent); }
+  .templates-title { display: block; color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .templates-desc { display: block; color: var(--muted2); font-size: 13px; line-height: 1.5; }
 
   .followup-label {
     font-family: 'Syne', sans-serif;
@@ -523,14 +529,6 @@
     gap: 8px;
   }
 
-  .followup-label::after {
-    content: 'PRO';
-    background: var(--accent);
-    color: #000;
-    font-size: 9px;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
 
   .followup-blur {
     position: relative;
@@ -800,28 +798,6 @@
 <!-- ── TOAST ── -->
 <div class="toast" id="toast">✓ Copied to clipboard</div>
 
-<!-- ── MODAL ── -->
-<div class="modal-backdrop" id="modal">
-  <div class="modal">
-    <span class="modal-icon">🔒</span>
-    <h2>You've used your 3 free pitches</h2>
-    <p>Upgrade to keep generating. One good client more than pays for a lifetime of PitchKit.</p>
-    <div class="modal-plans">
-      <a href="https://senturer.gumroad.com/l/pitchkit" target="_blank" class="modal-plan">
-        <div class="plan-name">Templates</div>
-        <div class="plan-price">$27</div>
-        <div class="plan-feat">50 niche pitch templates · One-time</div>
-      </a>
-      <a href="https://senturer.gumroad.com/l/pitchkit" target="_blank" class="modal-plan featured">
-        <div class="plan-name">Pro Plan</div>
-        <div class="plan-price">$19<span style="font-size:12px;font-weight:400">/mo</span></div>
-        <div class="plan-feat">Unlimited AI · Follow-ups · PDF export</div>
-      </a>
-    </div>
-    <button class="modal-dismiss" onclick="closeModal()">Maybe later</button>
-  </div>
-</div>
-
 <div class="wrapper">
 
   <!-- ── HEADER ── -->
@@ -830,14 +806,7 @@
       <div class="logo-mark">⚡</div>
       PitchKit
     </div>
-    <div class="usage-badge">
-      <div class="usage-dots" id="usageDots">
-        <div class="dot" id="d1"></div>
-        <div class="dot" id="d2"></div>
-        <div class="dot" id="d3"></div>
-      </div>
-      <span id="usageText">3 free pitches left</span>
-    </div>
+    <div class="usage-badge"><span id="usageText">Unlimited · runs on your own key</span></div>
   </header>
 
   <!-- ── MAIN ── -->
@@ -994,26 +963,21 @@
           <div class="output-text" id="outputText"></div>
         </div>
 
-        <div class="quality-bar">
-          <span class="quality-label">AI Confidence</span>
-          <span class="quality-stars">★★★★★</span>
-          <span class="quality-text">High-converting pitch generated</span>
-        </div>
-
-        <!-- FOLLOW-UP TEASER (PRO) -->
+        <!-- FOLLOW-UPS -->
         <div class="followup-section" id="followupSection">
           <div class="followup-label">Follow-up Sequence</div>
-          <div class="followup-blur">
-            <div class="followup-preview" id="followupPreview">Follow-up #1 (Day 3): Hi [Name], just wanted to bump this to the top of your inbox. I know you're busy, and that's exactly why I built a process that gets results without adding to your plate. Worth a 15-min call this week?
-
-Follow-up #2 (Day 7): Quick question: are you still looking to [achieve outcome]? I have one client spot opening next month and wanted to offer it to you first before I post it publicly.</div>
-            <div class="followup-gate">
-              <button class="btn-upgrade" onclick="window.open('https://senturer.gumroad.com/l/pitchkit','_blank')">
-                🔓 Unlock Follow-Ups · $19/mo
-              </button>
-            </div>
+          <div class="followup-text" id="followupText">Most replies come after a follow-up. Write a Day 3 and a Day 7 follow-up that build on this pitch.</div>
+          <div class="followup-actions">
+            <button class="btn-upgrade" id="followupBtn" onclick="writeFollowups()">✦ Write follow-ups</button>
+            <button class="btn-sm" id="followupCopy" onclick="copyFollowups()" hidden><span>⎘</span> Copy follow-ups</button>
           </div>
         </div>
+
+        <!-- TEMPLATES PACK -->
+        <a class="templates-card" href="https://senturer.gumroad.com/l/pitchkit" target="_blank" rel="noopener">
+          <span class="templates-title">PitchKit Templates Pack · $17 one-time</span>
+          <span class="templates-desc">50 copy-paste pitch templates across 10 service niches: cold emails, LinkedIn DMs and proposal intros.</span>
+        </a>
 
       </div>
     </div>
@@ -1024,8 +988,7 @@ Follow-up #2 (Day 7): Quick question: are you still looking to [achieve outcome]
   <footer>
     <div class="footer-left">PitchKit © 2026 · Built by <a href="https://github.com/emresenturer" target="_blank" rel="noopener">Emre Senturer</a> · Powered by Claude</div>
     <div class="footer-links">
-      <a href="https://senturer.gumroad.com/l/pitchkit" target="_blank" rel="noopener">Templates ($27)</a>
-      <a href="https://senturer.gumroad.com/l/pitchkit" target="_blank" rel="noopener">Upgrade Pro</a>
+      <a href="https://senturer.gumroad.com/l/pitchkit" target="_blank" rel="noopener">Templates ($17)</a>
       <a href="https://github.com/emresenturer/pitchkit#privacy" target="_blank" rel="noopener">Privacy</a>
     </div>
   </footer>
@@ -1034,15 +997,12 @@ Follow-up #2 (Day 7): Quick question: are you still looking to [achieve outcome]
 
 <script>
   // ─── STATE ───────────────────────────────────────
-  const MAX_FREE = 3;
-  let usedCount = parseInt(localStorage.getItem('pk_used') || '0');
   let apiKey = localStorage.getItem('pk_apikey') || '';
   let selectedTone = 'confident and direct';
   let currentPitchText = '';
 
   // ─── INIT ─────────────────────────────────────────
   function init() {
-    updateUsageUI();
 
     // Pre-fill API key if saved
     if (apiKey) {
@@ -1073,34 +1033,8 @@ Follow-up #2 (Day 7): Quick question: are you still looking to [achieve outcome]
     showToast('✓ API key saved');
   }
 
-  // ─── USAGE UI ─────────────────────────────────────
-  function updateUsageUI() {
-    const remaining = Math.max(0, MAX_FREE - usedCount);
-    const dots = [document.getElementById('d1'), document.getElementById('d2'), document.getElementById('d3')];
-
-    dots.forEach((dot, i) => {
-      dot.className = 'dot';
-      if (i < usedCount) dot.classList.add(remaining === 0 ? 'all-used' : 'used');
-    });
-
-    const txt = document.getElementById('usageText');
-    if (remaining === 0) {
-      txt.textContent = '0 free pitches left';
-      txt.style.color = 'var(--red)';
-    } else {
-      txt.textContent = `${remaining} free pitch${remaining !== 1 ? 'es' : ''} left`;
-      txt.style.color = '';
-    }
-  }
-
   // ─── GENERATE ─────────────────────────────────────
   async function generatePitch() {
-    // Gate check
-    if (usedCount >= MAX_FREE) {
-      openModal();
-      return;
-    }
-
     // Validation
     const service = document.getElementById('serviceType').value;
     const niche   = document.getElementById('clientNiche').value;
@@ -1147,41 +1081,9 @@ Tone: ${selectedTone}
 Format it ready to copy and send. Include a compelling subject line if it's an email. Use line breaks for readability. Do NOT include placeholders like [Your Name]; just write [Name] for the recipient. Keep the pitch under 180 words. Make it feel personal, specific, and impossible to ignore.`;
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-beta': 'server-side-fallback-2026-07-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-opus-5-5',
-          max_tokens: 4000,
-          output_config: { effort: 'low' },
-          fallbacks: 'default',
-          system: systemPrompt,
-          messages: [{ role: 'user', content: userPrompt }]
-        })
-      });
+      const text = await callClaude(systemPrompt, userPrompt);
 
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error?.message || `API error ${response.status}`);
-      }
-
-      const data = await response.json();
-      if (data.stop_reason === 'refusal') {
-        throw new Error('The model declined this request. Try rephrasing your offer.');
-      }
-      const text = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
-
-      // Increment usage
-      usedCount++;
-      localStorage.setItem('pk_used', usedCount);
-      updateUsageUI();
-
+  
       // Typewriter effect
       document.getElementById('outputTypeLabel').textContent = outputLabel;
       document.getElementById('outputWrapper').classList.add('visible');
@@ -1202,11 +1104,65 @@ Format it ready to copy and send. Include a compelling subject line if it's an e
     } finally {
       btn.classList.remove('loading');
       btn.disabled = false;
-
-      if (usedCount >= MAX_FREE) {
-        setTimeout(openModal, 1800);
-      }
     }
+  }
+
+  // ─── CLAUDE API ───────────────────────────────────
+  async function callClaude(system, user) {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'server-side-fallback-2026-07-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-5-5',
+        max_tokens: 4000,
+        output_config: { effort: 'low' },
+        fallbacks: 'default',
+        system,
+        messages: [{ role: 'user', content: user }]
+      })
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API error ${response.status}`);
+    }
+    const data = await response.json();
+    if (data.stop_reason === 'refusal') {
+      throw new Error('The model declined this request. Try rephrasing your offer.');
+    }
+    return data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+  }
+
+  // ─── FOLLOW-UPS ───────────────────────────────────
+  async function writeFollowups() {
+    if (!currentPitchText || !apiKey) return;
+    const btn = document.getElementById('followupBtn');
+    const out = document.getElementById('followupText');
+    btn.disabled = true;
+    btn.textContent = 'Writing follow-ups…';
+    out.textContent = '';
+    try {
+      const system = `You write short, human follow-up emails for freelancers and agencies. You are ${selectedTone}. First person. No guilt-tripping, no "just checking in", no fake scarcity. Never use em dashes or en dashes. Use [Name] for the recipient and no other placeholders.`;
+      const user = `Here is the original pitch I sent:\n\n${currentPitchText}\n\nWrite two follow-ups. Label them "Follow-up #1 (Day 3)" and "Follow-up #2 (Day 7)". Each under 70 words, each adding one new reason to reply, ending with one low-friction question.`;
+      out.textContent = await callClaude(system, user);
+      document.getElementById('followupCopy').hidden = false;
+    } catch (err) {
+      out.textContent = `⚠️ Error: ${err.message}`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '↻ Write follow-ups again';
+    }
+  }
+  async function copyFollowups() {
+    const text = document.getElementById('followupText').textContent;
+    if (!text) return;
+    try { await navigator.clipboard.writeText(text); showToast('✓ Follow-ups copied to clipboard'); }
+    catch (e) { alert('Copy failed. Please select the text manually.'); }
   }
 
   // ─── TYPEWRITER ───────────────────────────────────
@@ -1265,17 +1221,6 @@ Format it ready to copy and send. Include a compelling subject line if it's an e
     }, 1200);
     el.focus();
   }
-
-  // ─── MODAL ────────────────────────────────────────
-  function openModal() {
-    document.getElementById('modal').classList.add('open');
-  }
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
-  }
-  document.getElementById('modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
 
   // ─── TOAST ────────────────────────────────────────
   function showToast(msg) {
