@@ -10,6 +10,13 @@ AI pitch generator for freelancers and agencies. Pick your service, the client's
 2. Fill in service, client industry, experience, key result and optional context.
 3. Pick a tone (Confident, Warm, Formal, Bold) and generate.
 4. Copy the pitch and send it.
+5. Optional: write a Day 3 and Day 7 follow-up sequence that builds on the pitch.
+
+No usage limits: every request runs on your own key.
+
+## Templates pack
+
+[PitchKit Templates Pack](https://senturer.gumroad.com/l/pitchkit), $17 one-time: 50 copy-paste pitch templates across 10 service niches, with cold emails, LinkedIn DMs and proposal intros.
 
 ## Privacy
 
