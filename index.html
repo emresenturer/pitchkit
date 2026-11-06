@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PitchKit — AI Pitch Generator</title>
+<title>PitchKit · AI Pitch Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -855,7 +855,7 @@
       <span class="notice-icon">🔑</span>
       <div>
         <strong style="color:var(--text)">Enter your Anthropic API key to activate the AI.</strong> Get one free at
-        <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a> — it takes 2 minutes.
+        <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a>. It takes 2 minutes.
         Your key stays in your browser only.
         <div class="api-key-row">
           <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
@@ -922,9 +922,9 @@
           <div class="field">
             <label>Your Experience</label>
             <select id="experience">
-              <option value="1–2 years">1–2 years</option>
-              <option value="3–5 years" selected>3–5 years</option>
-              <option value="5–10 years">5–10 years</option>
+              <option value="1 to 2 years">1 to 2 years</option>
+              <option value="3 to 5 years" selected>3 to 5 years</option>
+              <option value="5 to 10 years">5 to 10 years</option>
               <option value="10+ years">10+ years</option>
               <option value="just starting out">Just starting out</option>
             </select>
@@ -1004,12 +1004,12 @@
         <div class="followup-section" id="followupSection">
           <div class="followup-label">Follow-up Sequence</div>
           <div class="followup-blur">
-            <div class="followup-preview" id="followupPreview">Follow-up #1 (Day 3): Hi [Name], just wanted to bump this to the top of your inbox. I know you're busy — that's exactly why I built a process that gets results without adding to your plate. Worth a 15-min call this week?
+            <div class="followup-preview" id="followupPreview">Follow-up #1 (Day 3): Hi [Name], just wanted to bump this to the top of your inbox. I know you're busy, and that's exactly why I built a process that gets results without adding to your plate. Worth a 15-min call this week?
 
-Follow-up #2 (Day 7): Quick question — are you still looking to [achieve outcome]? I have one client spot opening next month and wanted to offer it to you first before I post it publicly.</div>
+Follow-up #2 (Day 7): Quick question: are you still looking to [achieve outcome]? I have one client spot opening next month and wanted to offer it to you first before I post it publicly.</div>
             <div class="followup-gate">
               <button class="btn-upgrade" onclick="window.open('https://senturer.gumroad.com/l/pitchkit','_blank')">
-                🔓 Unlock Follow-Ups — $19/mo
+                🔓 Unlock Follow-Ups · $19/mo
               </button>
             </div>
           </div>
@@ -1133,7 +1133,7 @@ Follow-up #2 (Day 7): Quick question — are you still looking to [achieve outco
     currentPitchText = '';
 
     // Build prompt
-    const systemPrompt = `You are a world-class sales copywriter who specializes in writing high-converting outreach for freelancers and agencies. You write pitches that sound like a real human — not a bot or a template. You are ${selectedTone}. Always write in first person. Never use hollow phrases like "I hope this finds you well" or "I wanted to reach out." Start with a hook that proves you understand their world. Keep it concise and punchy. End with one specific, low-friction CTA.`;
+    const systemPrompt = `You are a world-class sales copywriter who specializes in writing high-converting outreach for freelancers and agencies. You write pitches that sound like a real human, not a bot or a template. Never use em dashes or en dashes. You are ${selectedTone}. Always write in first person. Never use hollow phrases like "I hope this finds you well" or "I wanted to reach out." Start with a hook that proves you understand their world. Keep it concise and punchy. End with one specific, low-friction CTA.`;
 
     const userPrompt = `Write a ${outputType} pitch.
 
@@ -1144,7 +1144,7 @@ My experience: ${experience}
 Key result I deliver: ${outcome}
 Tone: ${selectedTone}
 
-Format it ready to copy and send. Include a compelling subject line if it's an email. Use line breaks for readability. Do NOT include placeholders like [Your Name] — just write [Name] for the recipient. Keep the pitch under 180 words. Make it feel personal, specific, and impossible to ignore.`;
+Format it ready to copy and send. Include a compelling subject line if it's an email. Use line breaks for readability. Do NOT include placeholders like [Your Name]; just write [Name] for the recipient. Keep the pitch under 180 words. Make it feel personal, specific, and impossible to ignore.`;
 
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
